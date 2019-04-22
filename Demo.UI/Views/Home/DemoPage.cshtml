@@ -10,6 +10,8 @@
 
 <h2>DemoPage</h2>
 
+<h6>This page is meant to demonstrate some of the common functionalities I've encountered in business web applications. The intent is to add more features over time until I have a sizeable demo. This page displays a simple table of records that can be searched client-side with the text box. More to come.</h6>
+
 
 
     <input id="searchTextBox" type="text" placeholder="Type here to search records"/>
@@ -77,7 +79,7 @@
                                         </div>
                                     </td>
                                     <td class="col-xs-2">
-                                        <div>
+                                        <div style="color: @(item.DateBegin < DateTime.Now ? "red;" : "black;") ">
                                             @item.DateBegin.ToShortDateString()
                                         </div>
                                     </td>
