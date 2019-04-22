@@ -1,0 +1,16 @@
+﻿.panel-heading {
+    font-weight: bold;
+}
+
+.panel-group {
+    width: 1500px;
+}
+
+.panel-content {
+    height: 430px;
+    overflow-y: auto;
+}
+
+#searchTextBox {
+    width: 190px;
+}

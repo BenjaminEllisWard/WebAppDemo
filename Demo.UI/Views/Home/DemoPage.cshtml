@@ -1,0 +1,159 @@
+﻿@model Demo.UI.Models.PageModel
+
+@{
+    ViewBag.Title = "DemoPage";
+}
+
+@Styles.Render("~/demo/css")
+@Scripts.Render("~/demo/js")
+
+
+<h2>DemoPage</h2>
+
+
+
+    <input id="searchTextBox" type="text" placeholder="Type here to search records"/>
+    <button id="testBtn">Click This</button>
+
+
+
+    <div class="panel-group">
+        <div id="panelDisplay" class="col-md-6 col-md-offset-3 panel-wrapper">
+            <div class="panel panel-default">
+                <div class="panel-content">
+                    <table class="table" id="userTable" role="presentation">
+                        <tbody>
+                            <tr class="panel-heading panel-title">
+                                <td>
+                                    Id
+                                </td>
+                                <td>
+                                    Description
+                                </td>
+                                <td>
+                                    Department
+                                </td>
+                                <td>
+                                    Rep Name
+                                </td>
+                                <td>
+                                    Amount
+                                </td>
+                                <td>
+                                    Create Date
+                                </td>
+                                <td>
+                                    Begin Date
+                                </td>
+                            </tr>
+                            @foreach (var item in Model.Model.ItemList)
+                            {
+                                <tr class="panel-table-row">
+                                    <td class="col-xs-2">
+                                        <div class="ModelCode">
+                                            @item.ItemId
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-8">
+                                        <div class="ModelDescription">
+                                            @item.ItemName
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-2">
+                                        <div class="ModelStatus">
+                                            @item.Organization
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-2">
+                                        <div>
+                                            @item.POCName
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-2">
+                                        <div>
+                                            @string.Format("{0:c}", item.Price)
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-2">
+                                        <div>
+                                            @item.DateEstablished.ToShortDateString()
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-2">
+                                        <div>
+                                            @item.DateBegin.ToShortDateString()
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+@*<div id="panelDisplayCodes" class="col-md-6 col-md-offset-3 panel-wrapper">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <div class="col-xs-2">Code</div>
+                    <div class="col-xs-8">Description</div>
+                    <div class="col-xs-2">Status</div>
+                </div>
+            </div>
+            <div class="panel-content">
+                <table class="table" id="userTable" role="presentation">
+                    <tbody>
+                        @foreach (var item in Model.Model.ItemList)
+                        {
+                            <tr class="panel-table-row">
+                                <td class="col-xs-2">
+                                    <div class="ModelCode">
+                                        @item.ItemId
+                                    </div>
+                                </td>
+                                <td class="col-xs-8">
+                                    <div class="ModelDescription">
+                                        @item.ItemName
+                                    </div>
+                                </td>
+                                <td class="col-xs-2">
+                                    <div class="ModelStatus">
+                                        @item.Organization
+                                    </div>
+                                </td>
+                                <td class="col-xs-2">
+                                    <div>
+                                        @item.POCName
+                                    </div>
+                                </td>
+                                <td class="col-xs-2">
+                                    <div>
+                                        @string.Format("{0:c}", item.Price)
+                                    </div>
+                                </td>
+                                <td class="col-xs-2">
+                                    <div>
+                                        @item.DateEstablished.ToShortDateString()
+                                    </div>
+                                </td>
+                                <td class="col-xs-2">
+                                    <div>
+                                        @item.DateBegin.ToShortDateString()
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>*@
+

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Demo.UI.Models;
 
 namespace Demo.UI.Controllers
 {
@@ -11,6 +12,12 @@ namespace Demo.UI.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult DemoPage()
+        {
+            var pageModel = new PageModel();
+            return View(pageModel);
         }
 
         public ActionResult About()

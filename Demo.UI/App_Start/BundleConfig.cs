@@ -25,6 +25,10 @@ namespace Demo.UI
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/demo/css").Include("~/Content/demo.css"));
+
+            bundles.Add(new ScriptBundle("~/demo/js").Include("~/Scripts/Demo.js"));
         }
     }
 }
