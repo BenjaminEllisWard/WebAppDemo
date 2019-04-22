@@ -2,6 +2,13 @@
     $("#testBtn").click(function () {
         searchRecords();
     })
+
+
+    var typingTimer;
+    $("#searchTextBox").on('input', function () {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(searchRecords, 500);
+    })
 })
 
 function searchRecords() {
