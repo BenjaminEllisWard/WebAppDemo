@@ -12,9 +12,12 @@
 
 <h6>This page is meant to demonstrate some of the common functionalities I've encountered in business web applications. The intent is to add more features over time until I have a sizeable demo. This page displays a simple table of records that can be searched client-side with the text box. More to come.</h6>
 
+<br />
 
-
-    <input id="searchTextBox" type="text" placeholder="Type here to search records"/>
+<input id="searchTextBox" type="text" placeholder="Type here to search records"/>
+<br />
+<label>Show past due records</label>
+<input id="showPastDueChkbx" type="checkbox"/>
 
     <div class="panel-group">
         <div id="panelDisplay" class="col-md-6 col-md-offset-3 panel-wrapper">
@@ -79,7 +82,7 @@
                                         </div>
                                     </td>
                                     <td class="col-xs-2">
-                                        <div style="color: @(item.DateBegin < DateTime.Now ? "red;" : "black;") ">
+                                        <div class="ModelStatus" data-status="@(item.DateBegin < DateTime.Now ? "false" : "true")"  style="color: @(item.DateBegin < DateTime.Now ? "red;" : "black;") ">
                                             @item.DateBegin.ToShortDateString()
                                         </div>
                                     </td>

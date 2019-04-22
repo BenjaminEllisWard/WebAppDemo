@@ -3,13 +3,25 @@
         searchRecords();
     })
 
-
     var typingTimer;
     $("#searchTextBox").on('input', function () {
         clearTimeout(typingTimer);
         typingTimer = setTimeout(searchRecords, 500);
     })
+
+    $("#showPastDueChkbx").change(function () {
+        TogglePastDue();
+    });
 })
+
+var isPastDueChecked = false
+
+function TogglePastDue() {
+    var isChecked = $("#showPastDueChkbx").is(':checked');
+    isPastDueChecked = isChecked ? true : false;
+
+    $('.ModelStatus[data-status=true]').parent().parent().toggle(!isChecked);
+}
 
 function searchRecords() {
     var searchText = $("#searchTextBox").val().toLowerCase();
