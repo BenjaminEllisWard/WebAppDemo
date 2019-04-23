@@ -1,9 +1,15 @@
-﻿.panel-heading {
+﻿.stuff-container {
+    display: flex;
+}
+
+.panel-heading {
     font-weight: bold;
 }
 
 .panel-group {
-    width: 1500px;
+    width: 1400px;
+    padding: 10px;
+
 }
 
 .panel-content {
@@ -13,4 +19,12 @@
 
 #searchTextBox {
     width: 190px;
+}
+
+.control-group {
+    padding: 10px;
+}
+
+.form-control-custom {
+    margin-bottom: 6px;
 }
