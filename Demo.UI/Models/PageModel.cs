@@ -9,6 +9,7 @@ namespace Demo.UI.Models
 {
     public class PageModel
     {
+        //TODO Instead of using the DTO, give model its own properties for custom getting/setting.
         public PageModelDTO Model { get; set; }
 
         public PageModel()

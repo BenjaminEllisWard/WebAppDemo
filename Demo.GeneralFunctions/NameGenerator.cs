@@ -17,8 +17,6 @@ namespace Demo.GeneralFunctions
         {
             var rnd = new Random();
 
-            
-
             //return a random name from SomeNames
             return SomeNames[rnd.Next(0, 3)];
         }
@@ -29,7 +27,7 @@ namespace Demo.GeneralFunctions
             {
                 "Michael Scott",
                 "Dwight Schrute",
-                "Pam Halpert"
+                "Pam Beasley"
             };
         }
     }

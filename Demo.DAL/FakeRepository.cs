@@ -42,7 +42,9 @@ namespace Demo.DAL
         }
 
         
-                
+        /// <summary>
+        /// Hard-code a fake context for demonstration purposes.
+        /// </summary>        
         private void CreateFakeContext()
         {
             var fakeContext = new List<ItemModelDTO>();
@@ -54,6 +56,7 @@ namespace Demo.DAL
                 //Used to avoid price == zero
                 decimal basePrice = 1000.00M;
 
+                //3 separate .add() blocks used to introduce variation to context
                 fakeContext.Add(new ItemModelDTO {
                     ItemId = i,
                     ItemName = "ThisDescription" + i.ToString(),
@@ -99,6 +102,9 @@ namespace Demo.DAL
         }
 
         #region IDisposable Support
+        //Disposable support is added here so that repository can be used similar to how
+        //a business-sized repository might.
+
         private bool disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
