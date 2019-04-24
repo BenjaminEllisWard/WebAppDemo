@@ -16,10 +16,20 @@
 
 <div class="stuff-container">
     <div class="control-group">
-        <input class="form-control-custom" id="searchTextBox" type="text" placeholder="Type here to search records" />
-        <br />
-        <label>Show past due records</label>
-        <input class="form-control-custom" id="showPastDueChkbx" type="checkbox" />
+        <div class="control-group-wrapper">
+            <label>Client controls</label>
+            <input class="form-control-custom" id="searchTextBox" type="text" placeholder="Type here to search records" />
+            <br />
+            <label>Show past due records</label>
+            <input class="form-control-custom" id="showPastDueChkbx" type="checkbox" />
+        </div>
+
+        <div class="control-group-wrapper">
+            <label class="group-label">Server controls</label>
+            <div class="server-control">
+                @Html.DropDownListFor(m => m.Model.FilterModel.OrganizationOptions, new SelectList(Model.Model.FilterModel.OrganizationOptions), "Select Organization")
+            </div>
+        </div>
     </div>
 
     <div class="panel-group">

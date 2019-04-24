@@ -28,3 +28,25 @@
 .form-control-custom {
     margin-bottom: 6px;
 }
+
+.control-group-wrapper {
+    border-radius: 5px;
+    border-color: darkgray;
+    background-color: #F4F4F4;
+    padding: 4px;
+    margin-bottom: 10px;
+    text-align: center;
+    padding-top: 10px;
+    border-style: solid;
+    border-width: 1px;
+    /*box-shadow: 3px 3px 5px 2px #ccc;*/
+}
+
+.server-control {
+    margin: auto;
+    padding-bottom: 6px;
+}
+
+.group-label {
+    
+}
