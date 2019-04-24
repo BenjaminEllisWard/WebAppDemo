@@ -29,6 +29,10 @@
             <div class="server-control">
                 @Html.DropDownListFor(m => m.Model.FilterModel.OrganizationOptions, new SelectList(Model.Model.FilterModel.OrganizationOptions), new { @id = "orgDdl", @class = "select-add-placeholder" })
             </div>
+            <div class="server-control text-btn-inline">
+                <input type="text" placeholder="minimum $ amount" id="minAmtTxt" />
+                <button id="minAmtBtn">Go</button>
+            </div>
         </div>
     </div>
 

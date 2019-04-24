@@ -46,3 +46,7 @@
     margin: auto;
     padding-bottom: 6px;
 }
+
+.text-btn-inline {
+    display: flex;
+}

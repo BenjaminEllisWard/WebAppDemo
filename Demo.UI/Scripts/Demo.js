@@ -16,7 +16,7 @@
     });
 
     $(".control-group-wrapper").mouseenter(function () {
-        $(this).css("box-shadow", "0px 0px 5px 2px lightblue");
+        $(this).css("box-shadow", "0px 0px 6px 2px lightblue");
     });
 
     $(".control-group-wrapper").mouseleave(function () {
@@ -26,7 +26,24 @@
     $("#orgDdl").change(function () {
         FilterByOrg();
     });
+
+    $("#minAmtBtn").click(function () {
+        alert("This button doesn't work yet. Try again later. \r\n  -Ben, 4/23/19");
+    })
+
+    $("#minAmtTxt").on('input', function () {
+        ForceNumericInput();
+    })
 });
+
+function ForceNumericInput() {
+    var input = $('#minAmtTxt').val();
+    var lastChar = input[input.length - 1];
+
+    if ('01234567890'.indexOf(lastChar) == -1 || input.length > 6) {
+        $('#minAmtTxt').val(input.length > 0 ? input.substring(0, input.length - 1) : '');
+    }
+}
 
 function FilterByOrg() {
     var orgSelected = $("#orgDdl").val().trim();
