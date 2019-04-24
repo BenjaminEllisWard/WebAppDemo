@@ -1,0 +1,71 @@
+﻿@model Demo.UI.Models.PageModel
+
+<table class="table" id="userTable" role="presentation">
+    <thead class="panel-heading panel-title">
+        <tr class="panel-heading panel-title">
+            <td>
+                Id
+            </td>
+            <td>
+                Description
+            </td>
+            <td>
+                Department
+            </td>
+            <td>
+                Rep Name
+            </td>
+            <td>
+                Amount
+            </td>
+            <td>
+                Create Date
+            </td>
+            <td>
+                Begin Date
+            </td>
+        </tr>
+    </thead>
+    <tbody class="panel-body">
+        @foreach (var item in Model.Model.ItemList)
+        {
+            <tr class="panel-table-row">
+                <td class="col-xs-2">
+                    <div class="ModelCode">
+                        @item.ItemId
+                    </div>
+                </td>
+                <td class="col-xs-8">
+                    <div class="ModelDescription">
+                        @item.ItemName
+                    </div>
+                </td>
+                <td class="col-xs-2">
+                    <div class="ModelStatus">
+                        @item.Organization
+                    </div>
+                </td>
+                <td class="col-xs-2">
+                    <div>
+                        @item.POCName
+                    </div>
+                </td>
+                <td class="col-xs-2">
+                    <div>
+                        @string.Format("{0:c}", item.Price)
+                    </div>
+                </td>
+                <td class="col-xs-2">
+                    <div>
+                        @item.DateEstablished.ToShortDateString()
+                    </div>
+                </td>
+                <td class="col-xs-2">
+                    <div class="ModelStatus" data-status="@(item.DateBegin<DateTime.Now ?"false" :"true")" style="color: @(item.DateBegin < DateTime.Now ? "red;" : "black;") ">
+                        @item.DateBegin.ToShortDateString()
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

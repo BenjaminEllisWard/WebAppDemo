@@ -93,6 +93,15 @@ namespace Demo.DAL
             }
         }
 
+        public List<ItemModelDTO> GetFilteredItems(string organization)
+        {
+            var filteredItems = FakeContext.Where(x => x.Organization == organization)
+                                           .OrderBy(x => x.ItemId)
+                                           .ToList();
+
+            return filteredItems;
+        }
+
         /// <summary>
         /// Contructor automatically populates FakeContext.
         /// </summary>

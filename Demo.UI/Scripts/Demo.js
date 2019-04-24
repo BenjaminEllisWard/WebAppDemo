@@ -1,4 +1,6 @@
 ﻿$(document).ready(function () {
+    $(".select-add-placeholder").prepend("<option value='' disabled selected>Select Organization</option>");
+
     $("#testBtn").click(function () {
         searchRecords();
     })
@@ -20,7 +22,28 @@
     $(".control-group-wrapper").mouseleave(function () {
         $(this).css("box-shadow", "0px 0px 0px 0px #ccc");
     });
-})
+
+    $("#orgDdl").change(function () {
+        FilterByOrg();
+    });
+});
+
+function FilterByOrg() {
+    var orgSelected = $("#orgDdl").val().trim();
+
+    $.ajax({
+        //url: filterUrl,
+        url: '/Home/GetRecordsByOrg?organization=' + orgSelected,
+        type: 'Get',
+        //data: orgSelected,
+        //dataType: 'string',
+        success: function (result) {
+            $("#tableResults").html(result);
+        }
+    });
+
+    //$("#tableResults").load('@(Url.Action("GetRecordsByOrg","Home",null, Request.Url.Scheme))?organization=' + orgSelected);
+};
 
 var isPastDueChecked = false
 

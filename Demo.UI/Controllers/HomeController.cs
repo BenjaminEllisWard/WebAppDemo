@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Demo.UI.Models;
+using Demo.BLL;
 
 namespace Demo.UI.Controllers
 {
@@ -14,10 +15,21 @@ namespace Demo.UI.Controllers
             return View();
         }
 
-        public ActionResult DemoPage()
+        [HttpGet]
+        public ActionResult DemoPage(string filter = null)
         {
             var pageModel = new PageModel();
             return View(pageModel);
+        }
+
+        [HttpGet]
+        public ActionResult GetRecordsByOrg(string organization)
+        {
+            var service = new Services();
+            var model = new PageModel();
+            model.Model = service.GetFilteredPageModel(organization);
+
+            return PartialView("DemoPagePartial", model);
         }
 
         public ActionResult About()

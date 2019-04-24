@@ -58,5 +58,29 @@ namespace Demo.BLL
 
             return pageModel;
         }
+
+        public PageModelDTO GetFilteredPageModel(string organization)
+        {
+            var pageModel = new PageModelDTO()
+            {
+                ItemList = GetFilteredItems(organization)
+            };
+
+            pageModel.FilterModel = GetFilterOptionsForPageModel(pageModel.ItemList);
+
+            return pageModel;
+        }
+
+        private List<ItemModelDTO> GetFilteredItems(string organization)
+        {
+            var items = new List<ItemModelDTO>();
+
+            using (var repo = new FakeRepository())
+            {
+                items = repo.GetFilteredItems(organization);
+            }
+
+            return items;
+        }
     }
 }
