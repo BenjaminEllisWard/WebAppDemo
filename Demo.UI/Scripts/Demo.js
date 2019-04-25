@@ -15,13 +15,11 @@
         TogglePastDue();
     });
 
-    $(".control-group-wrapper").mouseenter(function () {
-        $(this).css("box-shadow", "0px 0px 6px 2px lightblue");
-    });
-
-    $(".control-group-wrapper").mouseleave(function () {
-        $(this).css("box-shadow", "0px 0px 0px 0px #ccc");
-    });
+    //$('.control-group-wrapper').hover(function () {
+    //    $(this).css('box-shadow', '0px 0px 6px 2px lightblue');
+    //}, function () {
+    //    $(this).css('box-shadow', '');
+    //});
 
     $("#orgDdl").change(function () {
         FilterByOrg();
