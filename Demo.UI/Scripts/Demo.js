@@ -27,11 +27,15 @@
 
     $("#minAmtBtn").click(function () {
         alert("This button doesn't work yet. Try again later. \r\n  -Ben, 4/23/19");
-    })
+    });
+
+    $("#recordCountBtn").click(function () {
+        alert("This button doesn't work yet. Try again later. \r\n  -Ben, 4/26/19");
+    });
 
     $("#minAmtTxt").on('input', function () {
         ForceNumericInput();
-    })
+    });
 });
 
 function ForceNumericInput() {
@@ -62,6 +66,7 @@ function FilterByOrg() {
 
 var isPastDueChecked = false
 
+//TODO this checkbox causes problems when other controls are used while it is checked.
 function TogglePastDue() {
     var isChecked = $("#showPastDueChkbx").is(':checked');
     isPastDueChecked = isChecked ? true : false;

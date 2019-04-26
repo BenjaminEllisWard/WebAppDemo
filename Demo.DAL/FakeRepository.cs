@@ -16,7 +16,7 @@ namespace Demo.DAL
         private List<ItemModelDTO> FakeContext;
 
         /// <summary>
-        /// Returns list of items
+        /// Returns list of ItemModelDTO's
         /// </summary>
         public List<ItemModelDTO> GetItems()
         {
@@ -30,69 +30,86 @@ namespace Demo.DAL
             return fakeContext;
         }
 
-        private string PickANameForFakeContext()
+        private string PickANameForFakeContext(Random rnd)
         {
             var ng = new NameGenerator();
-
-            //Sleep used to enforce random pick in the case that method is called in a loop.
-            //TODO 5 milliseconds picked arbitrarily after 1 millisecond produced unexpected result. Test out shorter sleep time.
-            System.Threading.Thread.Sleep(5);
-
-            return ng.PickAName();
+            return ng.PickAName(rnd);
         }
 
         
         /// <summary>
-        /// Hard-code a fake context for demonstration purposes.
-        /// </summary>        
-        private void CreateFakeContext()
+        /// Hard codes a fake context for demonstration purposes
+        /// </summary>
+        /// <param name="recordCount">Determines the amount of records in the fake context</param>        
+        private void CreateFakeContext(int recordCount)
         {
-            var fakeContext = new List<ItemModelDTO>();
-            var nameGenerator = new NameGenerator();
-
-            //Populates FakeContext with ItemModelDTOs that vary on id, name, and organization.
-            for (int i = 0; i < 5; i++)
-            {
-                //Used to avoid price == zero
-                decimal basePrice = 1000.00M;
-
-                //3 separate .add() blocks used to introduce variation to context
-                fakeContext.Add(new ItemModelDTO {
-                    ItemId = i,
-                    ItemName = "ThisDescription" + i.ToString(),
-                    Price = basePrice + basePrice * i,
-                    Organization = "Sales",
-                    POCName = PickANameForFakeContext(),
-                    DateEstablished = DateTime.Now.AddMonths(i - 12),
-                    DateBegin = DateTime.Now.AddMonths(i - 2)
-                });
-
-                fakeContext.Add(new ItemModelDTO
-                {
-                    ItemId = i + 5,
-                    ItemName = "ThatDescription" + i.ToString(),
-                    Price = basePrice + basePrice * i,
-                    Organization = "Accounting",
-                    POCName = PickANameForFakeContext(),
-                    DateEstablished = DateTime.Now.AddMonths(i - 12),
-                    DateBegin = DateTime.Now.AddMonths(i - 2)
-                });
-
-                fakeContext.Add(new ItemModelDTO
-                {
-                    ItemId = i + 10,
-                    ItemName = "OtherDescription" + i.ToString(),
-                    Price = basePrice + basePrice * i,
-                    Organization = "Marketing",
-                    POCName = PickANameForFakeContext(),
-                    DateEstablished = DateTime.Now.AddMonths(i - 12),
-                    DateBegin = DateTime.Now.AddMonths(i - 2)
-                });
-
-                FakeContext = fakeContext;
-            }
+            var fakeContext = CreateRecordsForContextList(recordCount);
+            FakeContext = fakeContext;
         }
 
+        /// <summary>
+        /// Creates a list of records.
+        /// </summary>
+        /// <param name="recordCount">Sets the number of records to be created for FakeContext</param>
+        /// <returns></returns>
+        private List<ItemModelDTO> CreateRecordsForContextList(int recordCount)
+        {
+            var recordList = new List<ItemModelDTO>();
+            var basePrice = 1000.00M;
+            var rnd = new Random();
+
+            //Populates record with ItemModelDTOs that vary on id, name, and organization.
+            for (int i = 0; i < recordCount / 3; ++i)
+            {
+                recordList.Add(CreateSingleRecordForContextList(3*i, "ThisDescription", "Sales", basePrice, rnd));
+                recordList.Add(CreateSingleRecordForContextList(3*i + 1, "ThatDescription", "Accounting", basePrice, rnd));
+                recordList.Add(CreateSingleRecordForContextList(3*i + 2, "OtherDescription", "Marketing", basePrice, rnd));
+            }
+
+            //The following blocks resolve cases where recordCount is not divisible by three, meaning
+            //the block above has not completely finished creating the last one or two records.
+            if (recordCount % recordList.Count() != 0)
+            {
+                recordList.Add(CreateSingleRecordForContextList(recordCount - (recordCount % recordList.Count()), "ThisDescription", "Sales", basePrice, rnd));
+            }
+            if (recordCount % recordList.Count() == 1)
+            {
+                recordList.Add(CreateSingleRecordForContextList(recordCount - 1, "ThatDescription", "Sales", basePrice, rnd));
+            }
+
+            return recordList;
+        }
+
+        /// <summary>
+        /// Creates a single ItemModelDTO
+        /// </summary>
+        /// <param name="counter">Used to set ItemId</param>
+        /// <param name="description"></param>
+        /// <param name="org">organization</param>
+        /// <param name="basePrice">Used to avoid Price == 0</param>
+        /// <param name="rnd">Allows random variation between records.</param>
+        /// <returns></returns>
+        private ItemModelDTO CreateSingleRecordForContextList(int counter, string description, string org, decimal basePrice, Random rnd)
+        {
+            var record = new ItemModelDTO
+            {
+                ItemId = counter + 1,
+                ItemName = description + counter.ToString(),
+                Price = basePrice * rnd.Next(5, 21),
+                Organization = org,
+                POCName = PickANameForFakeContext(rnd),
+                DateEstablished = DateTime.Now.AddMonths(-rnd.Next(6, 25)),
+                DateBegin = DateTime.Now.AddMonths(rnd.Next(-6, 13))
+            };
+
+            return record;
+        }
+
+        /// <summary>
+        /// Gets a list of records filtered by organization.
+        /// </summary>
+        /// <param name="organization"></param>
+        /// <returns></returns>
         public List<ItemModelDTO> GetFilteredItems(string organization)
         {
             var filteredItems = FakeContext.Where(x => x.Organization == organization)
@@ -105,9 +122,11 @@ namespace Demo.DAL
         /// <summary>
         /// Contructor automatically populates FakeContext.
         /// </summary>
-        public FakeRepository()
+        /// <param name="recordCount">Optional parameter. Intended to allow the user
+        /// to test performance by varying page size.</param>
+        public FakeRepository(int recordCount = 20)
         {
-            CreateFakeContext();
+            CreateFakeContext(recordCount);
         }
 
         #region IDisposable Support

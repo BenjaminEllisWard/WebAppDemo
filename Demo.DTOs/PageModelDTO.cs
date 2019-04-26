@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Demo.DTOs
 {
@@ -16,7 +17,11 @@ namespace Demo.DTOs
         public decimal Price { get; set; }
         public string Organization { get; set; }
         public string POCName { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:MMM-yyyy}")]
         public DateTime DateEstablished { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:MMM-yyyy}")]
         public DateTime DateBegin { get; set; }
     }
 

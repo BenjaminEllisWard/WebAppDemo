@@ -13,10 +13,8 @@ namespace Demo.GeneralFunctions
     {
         private readonly string[] SomeNames;
 
-        public string PickAName()
+        public string PickAName(Random rnd)
         {
-            var rnd = new Random();
-
             //return a random name from SomeNames
             return SomeNames[rnd.Next(0, 3)];
         }
