@@ -10,14 +10,16 @@
 
 <h2>DemoPage</h2>
 
-<h6>This page is meant to demonstrate some of the common functionalities I've encountered in business web applications. The intent is to add more features over time until I have a sizeable demo. This page displays a simple table of records that can be searched client-side with the text box. More to come.</h6>
+<p>This page is meant to demonstrate some of the common functionalities I've encountered in business web applications. The intent is to add more features over time until I have a sizeable demo. So far I have a simple table that can be manipulated with both client and server controls. The server controls update a partial view of the table asynchronously. Test it out by pressing play on the soundcloud player at the bottom left and then using the controls. You will see that the table can update && More to come.</p>
 
 <br />
 
 <div class="stuff-container">
     <div class="control-group">
         <div class="control-group-wrapper">
-            <label class="group-label">Client controls</label>
+            <div class="vertical-separator">
+                <label>Client controls</label>
+            </div>
             <input class="form-control-custom" id="searchTextBox" type="text" placeholder="Type here to search records" />
             <br />
             <label>Show past due records</label>
@@ -26,7 +28,7 @@
 
         <div class="control-group-wrapper">
             <div class="vertical-separator">
-                <label class="group-label">Server controls</label>
+                <label>Server controls</label>
             </div>
             <div class="server-control">
                 @Html.DropDownListFor(m => m.Model.FilterModel.OrganizationOptions, new SelectList(Model.Model.FilterModel.OrganizationOptions), new { @id = "orgDdl", @class = "select-add-placeholder" })
