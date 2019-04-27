@@ -22,7 +22,7 @@ namespace Demo.DAL
         /// </summary>
         /// <param name="recordCount">Optional parameter. Intended to allow the user
         /// to test performance by varying page size.</param>
-        public FakeRepository(int recordCount = 20)
+        public FakeRepository(int recordCount = 100)
         {
             FakeContext = CreateRecordsForContextList(recordCount);
         }
@@ -51,9 +51,9 @@ namespace Demo.DAL
             //Populates record with ItemModelDTOs that vary on id, name, and organization.
             for (int i = 0; i < recordCount / 3; ++i)
             {
-                recordList.Add(CreateSingleRecord(3*i, "ThisDescription", "Sales", rnd));
-                recordList.Add(CreateSingleRecord(3*i + 1, "ThatDescription", "Accounting", rnd));
-                recordList.Add(CreateSingleRecord(3*i + 2, "OtherDescription", "Marketing", rnd));
+                recordList.Add(CreateSingleRecord(3*i, "This Description", "Sales", rnd));
+                recordList.Add(CreateSingleRecord(3*i + 1, "That Description", "Accounting", rnd));
+                recordList.Add(CreateSingleRecord(3*i + 2, "Other Description", "Marketing", rnd));
             }
 
             //The following blocks resolve cases where recordCount is not divisible by three, meaning
@@ -84,7 +84,7 @@ namespace Demo.DAL
             var record = new ItemModelDTO
             {
                 ItemId = counter + 1,
-                ItemName = description + counter.ToString(),
+                ItemName = description + " " + (counter + 1).ToString(),
                 Price = 1000.00M * rnd.Next(5, 21),
                 Organization = org,
                 POCName = PickANameForSingleRecord(rnd),

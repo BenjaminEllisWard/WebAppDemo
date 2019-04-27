@@ -16,7 +16,7 @@ namespace Demo.GeneralFunctions
         public string PickAName(Random rnd)
         {
             //return a random name from SomeNames
-            return SomeNames[rnd.Next(0, 3)];
+            return SomeNames[rnd.Next(0, 8)];
         }
 
         public NameGenerator()
@@ -25,7 +25,12 @@ namespace Demo.GeneralFunctions
             {
                 "Michael Scott",
                 "Dwight Schrute",
-                "Pam Beasley"
+                "Pam Beasley",
+                "Kevin Malone",
+                "Andrew Bernard",
+                "Stanley Hudson",
+                "Todd Packer",
+                "Phyllis Vance"
             };
         }
     }
