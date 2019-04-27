@@ -1,25 +1,19 @@
-﻿$(document).ready(function () {
+﻿//var isPastDueChecked
+
+$(document).ready(function () {
     $(".select-add-placeholder").prepend("<option value='' disabled selected>Select Organization</option>");
 
-    $("#testBtn").click(function () {
-        searchRecords();
-    });
-
+    //Associates a timer with input for searching records.
     var typingTimer;
     $("#searchTextBox").on('input', function () {
         clearTimeout(typingTimer);
         typingTimer = setTimeout(searchRecords, 500);
     })
 
-    $("#showPastDueChkbx").change(function () {
-        TogglePastDue();
+    //Checkbox filter is written into record search function.
+    $("#showPastDueChkbx").on('input', function () {
+        searchRecords();
     });
-
-    //$('.control-group-wrapper').hover(function () {
-    //    $(this).css('box-shadow', '0px 0px 6px 2px lightblue');
-    //}, function () {
-    //    $(this).css('box-shadow', '');
-    //});
 
     $("#orgDdl").change(function () {
         FilterByOrg();
@@ -42,6 +36,7 @@ function ForceNumericInput() {
     var input = $('#minAmtTxt').val();
     var lastChar = input[input.length - 1];
 
+    //Brute force way of restricting user to numeric input of less than 7 digits. Does not work against pasted input.
     if ('01234567890'.indexOf(lastChar) == -1 || input.length > 6) {
         $('#minAmtTxt').val(input.length > 0 ? input.substring(0, input.length - 1) : '');
     }
@@ -50,42 +45,35 @@ function ForceNumericInput() {
 function FilterByOrg() {
     var orgSelected = $("#orgDdl").val().trim();
 
+    //TODO make this work without hardcoding url.
     $.ajax({
-        //url: filterUrl,
         url: '/Home/GetRecordsByOrg?organization=' + orgSelected,
         type: 'Get',
-        //data: orgSelected,
-        //dataType: 'string',
         success: function (result) {
             $("#tableResults").html(result);
         }
     });
-
-    //$("#tableResults").load('@(Url.Action("GetRecordsByOrg","Home",null, Request.Url.Scheme))?organization=' + orgSelected);
 };
-
-var isPastDueChecked = false
-
-//TODO this checkbox causes problems when other controls are used while it is checked.
-function TogglePastDue() {
-    var isChecked = $("#showPastDueChkbx").is(':checked');
-    isPastDueChecked = isChecked ? true : false;
-
-    $('.ModelStatus[data-status=true]').parent().parent().toggle(!isChecked);
-}
 
 function searchRecords() {
     var searchText = $("#searchTextBox").val().toLowerCase();
-    var noResultsFound = true;
+    var isPastDueChecked = $('#showPastDueChkbx').is(':checked');
 
+    //Check each row
     $(".panel-table-row").each(function () {
         var data = $(this).html().toLowerCase();
 
         if (data.indexOf(searchText) > -1) {
-            $(this).css("display", "table-row");
+
+            if (isPastDueChecked && $(this).find('.ModelStatus').data('status') == 'True') {
+                $(this).css('display', 'none');
+            }
+            else {
+                $(this).css("display", "table-row");
+            }
         }
         else {
             $(this).css("display", "none");
         }
-    })
-}
+    });
+};

@@ -1,5 +1,6 @@
 ﻿@model Demo.UI.Models.PageModel
 
+<div id="testDiv" data-status="true"></div>
     <table id="userTable" class="scrollabe-table">
         <thead>
             <tr>
@@ -31,17 +32,17 @@
             {
                 <tr class="panel-table-row">
                     <td>
-                        <div class="ModelCode">
+                        <div>
                             @item.ItemId
                         </div>
                     </td>
                     <td>
-                        <div class="ModelDescription">
+                        <div>
                             @item.ItemName
                         </div>
                     </td>
                     <td>
-                        <div class="ModelStatus">
+                        <div>
                             @item.Organization
                         </div>
                     </td>
@@ -61,7 +62,7 @@
                         </div>
                     </td>
                     <td>
-                        <div class="ModelStatus" data-status="@(item.DateBegin<DateTime.Now ?"false" :"true")" style="color: @(item.DateBegin < DateTime.Now ? "red;" : "black;") ">
+                        <div class="ModelStatus" data-status="@(item.DateBegin < DateTime.Now ? false : true)" style="color: @(item.DateBegin < DateTime.Now ? "red;" : "black;") ">
                             @string.Format("{0:MMM yyyy}", item.DateBegin)
                         </div>
                     </td>
