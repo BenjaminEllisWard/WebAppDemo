@@ -7,14 +7,18 @@
 }
 
 .panel-group {
-    width: 1400px;
     padding: 10px;
-
+    padding-left: 35px;
+    width: 100%;
 }
 
 .panel-content {
-    height: 430px;
+    height: 400px;
     overflow-y: auto;
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid lightgrey;
+    border-right: 0;
 }
 
 #searchTextBox {
@@ -32,7 +36,7 @@
 .control-group-wrapper {
     border-radius: 5px;
     border-color: darkgray;
-    background-color: #F4F4F4;
+    background-color: #F8F8F8;
     padding: 4px;
     margin-bottom: 10px;
     text-align: center;
@@ -52,4 +56,31 @@
 
 .text-btn-inline {
     display: flex;
+}
+
+.scrollabe-table {
+    width: 100%;
+    border-spacing: 0px;
+    border-collapse: separate;
+}
+
+table.scrollabe-table thead th {
+    position: sticky;
+    top: 0px;
+    background: #EEE8AA;
+    /*background: #FAFAD2;*/
+    /*background: skyblue;*/
+    border-bottom: 1px solid black;
+    height: 30px;
+    line-height: 10px;
+}
+
+.scrollabe-table tbody td, .scrollabe-table thead th {
+    border: 1px solid #F8F8F8;
+    font-size: small;
+    text-align: center;
+}
+
+.scrollabe-table tbody td {
+    height: 35px;
 }

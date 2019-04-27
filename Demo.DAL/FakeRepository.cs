@@ -15,6 +15,8 @@ namespace Demo.DAL
     {
         private List<ItemModelDTO> FakeContext;
 
+        #region Fake context creation
+
         /// <summary>
         /// Contructor automatically populates FakeContext.
         /// </summary>
@@ -55,7 +57,7 @@ namespace Demo.DAL
             }
 
             //The following blocks resolve cases where recordCount is not divisible by three, meaning
-            //the block above has not completely finished creating the last one or two records.
+            //the block above has not finished creating the last one or two records.
             if (recordCount % recordList.Count() != 0)
             {
                 recordList.Add(CreateSingleRecord(recordCount - (recordCount % recordList.Count()),"ThisDescription", "Sales", rnd));
@@ -93,6 +95,10 @@ namespace Demo.DAL
             return record;
         }
 
+        #endregion
+
+        #region Data access
+
         /// <summary>
         /// Gets a list of records filtered by organization.
         /// </summary>
@@ -116,6 +122,8 @@ namespace Demo.DAL
             //can be added if needed in the future.
             return FakeContext.OrderBy(x => x.ItemId).ToList();
         }
+
+        #endregion
 
         #region IDisposable Support
         //Disposable support is added here so that repository can be used similar to how
@@ -153,6 +161,7 @@ namespace Demo.DAL
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
+
         #endregion
     }
 }
