@@ -1,6 +1,5 @@
-﻿//var isPastDueChecked
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
+    //Adds a disabled placeholder to dropdownlist.
     $(".select-add-placeholder").prepend("<option value='' disabled selected>Select Organization</option>");
 
     //Associates a timer with input for searching records.
@@ -8,7 +7,7 @@ $(document).ready(function () {
     $("#searchTextBox").on('input', function () {
         clearTimeout(typingTimer);
         typingTimer = setTimeout(searchRecords, 500);
-    })
+    });
 
     //Checkbox filter is written into record search function.
     $("#showPastDueChkbx").on('input', function () {
