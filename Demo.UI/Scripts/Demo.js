@@ -3,7 +3,7 @@
 
     $("#testBtn").click(function () {
         searchRecords();
-    })
+    });
 
     var typingTimer;
     $("#searchTextBox").on('input', function () {

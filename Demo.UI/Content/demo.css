@@ -2,6 +2,13 @@
     display: flex;
 }
 
+.group-label {
+    width: 100%;
+    border-bottom: 1px solid lightgrey;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
 .panel-heading {
     font-weight: bold;
 }
@@ -26,7 +33,7 @@
 }
 
 .control-group {
-    padding: 10px;
+    padding-right: 10px;
 }
 
 .form-control-custom {

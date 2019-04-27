@@ -17,7 +17,7 @@
 <div class="stuff-container">
     <div class="control-group">
         <div class="control-group-wrapper">
-            <label>Client controls</label>
+            <label class="group-label">Client controls</label>
             <input class="form-control-custom" id="searchTextBox" type="text" placeholder="Type here to search records" />
             <br />
             <label>Show past due records</label>
@@ -25,7 +25,9 @@
         </div>
 
         <div class="control-group-wrapper">
-            <label class="group-label">Server controls</label>
+            <div class="vertical-separator">
+                <label class="group-label">Server controls</label>
+            </div>
             <div class="server-control">
                 @Html.DropDownListFor(m => m.Model.FilterModel.OrganizationOptions, new SelectList(Model.Model.FilterModel.OrganizationOptions), new { @id = "orgDdl", @class = "select-add-placeholder" })
             </div>
