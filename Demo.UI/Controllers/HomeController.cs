@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Demo.UI.Models;
 using Demo.BLL;
+using static Demo.GeneralFunctions.ValidationHelper;
 
 namespace Demo.UI.Controllers
 {
@@ -27,7 +28,11 @@ namespace Demo.UI.Controllers
         {
             var service = new Services();
             var model = new PageModel();
-            model.Model = service.GetFilteredPageModel(organization);
+
+            if (ValidateOrganization(organization))
+            {
+                model.Model = service.GetFilteredPageModel(organization);
+            }
 
             return PartialView("DemoPagePartial", model);
         }

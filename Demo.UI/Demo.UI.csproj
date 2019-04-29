@@ -224,6 +224,10 @@
       <Project>{8e046ec1-6935-4f45-b887-99b44419083f}</Project>
       <Name>Demo.DTOs</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Demo.GeneralFunctions\Demo.GeneralFunctions.csproj">
+      <Project>{2200371c-2384-4ccd-824d-eedfe72720e8}</Project>
+      <Name>Demo.GeneralFunctions</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

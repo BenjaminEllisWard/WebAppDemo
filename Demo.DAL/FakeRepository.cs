@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Demo.DTOs;
-using Demo.GeneralFunctions;
 
 namespace Demo.DAL
 {
@@ -34,8 +33,15 @@ namespace Demo.DAL
         /// <returns></returns>
         private string PickANameForSingleRecord(Random rnd)
         {
-            var ng = new NameGenerator();
-            return ng.PickAName(rnd);
+            if(rnd !=  null)
+            {
+                var ng = new NamePicker();
+                return ng.PickAName(rnd);
+            }
+            else
+            {
+                throw new NullReferenceException();
+            }
         }
 
         /// <summary>
@@ -106,9 +112,14 @@ namespace Demo.DAL
         /// <returns></returns>
         public List<ItemModelDTO> GetFilteredItems(string organization)
         {
-            var filteredItems = FakeContext.Where(x => x.Organization == organization)
+            var filteredItems = new List<ItemModelDTO>();
+
+            if (!string.IsNullOrWhiteSpace(organization))
+            {
+                filteredItems = FakeContext.Where(x => x.Organization == organization)
                                            .OrderBy(x => x.ItemId)
                                            .ToList();
+            }
 
             return filteredItems;
         }
@@ -121,6 +132,45 @@ namespace Demo.DAL
             //TODO this method doesn't do anything other than return FakeContext. A parameter for a filter model
             //can be added if needed in the future.
             return FakeContext.OrderBy(x => x.ItemId).ToList();
+        }
+
+        /// <summary>
+        /// Gets a list of all organizations
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetOrganizations()
+        {
+            var organizations = FakeContext.Select(x => x.Organization).Distinct().ToList();
+            return organizations;
+        }
+
+        /// <summary>
+        /// Utility class for selecting a name at random from a hard-coded list.
+        /// </summary>
+        private class NamePicker
+        {
+            private readonly string[] SomeNames;
+
+            public string PickAName(Random rnd)
+            {
+                //return a random name from SomeNames
+                return SomeNames[rnd.Next(0, 8)];
+            }
+
+            public NamePicker()
+            {
+                SomeNames = new string[]
+                {
+                "Michael Scott",
+                "Dwight Schrute",
+                "Pam Beasley",
+                "Kevin Malone",
+                "Andrew Bernard",
+                "Stanley Hudson",
+                "Todd Packer",
+                "Phyllis Vance"
+                };
+            }
         }
 
         #endregion
