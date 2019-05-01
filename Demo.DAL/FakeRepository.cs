@@ -8,29 +8,40 @@ using Demo.DTOs;
 namespace Demo.DAL
 {
     /// <summary>
-    /// Hardcoded repository meant to mimic data access to a Db context for demonstration puroposes
+    /// Repository that mimics data access to a Db context. Hardcoded for demonstration puroposes
     /// </summary>
     public class FakeRepository : IDisposable
     {
-        private List<ItemModelDTO> FakeContext;
+        //Structured this way so that usage within repository will mimic context/entity usage in entity framework.
+        private class FakeDbContext
+        {
+            public List<ItemModelDTO> FakeEntity;
+        }
 
+        //Context to be used throughout the repository.
+        private FakeDbContext FakeContext;
+        
         #region Fake context creation
 
         /// <summary>
-        /// Contructor automatically populates FakeContext.
+        /// Contructor populates FakeContext.
         /// </summary>
         /// <param name="recordCount">Optional parameter. Intended to allow the user
         /// to test performance by varying page size.</param>
         public FakeRepository(int recordCount = 100)
         {
+            var fakeContext = new FakeDbContext();
+
             if (recordCount > 0)
             {
-                FakeContext = CreateRecordsForContextList(recordCount);
+                fakeContext.FakeEntity = CreateRecordsForContextList(recordCount);
             }
             else
             {
                 throw new Exception("recordCount must be a positive, non-zero integer.");
             }
+
+            FakeContext = fakeContext;
         }
 
         /// <summary>
@@ -59,27 +70,35 @@ namespace Demo.DAL
         private List<ItemModelDTO> CreateRecordsForContextList(int recordCount)
         {
             var recordList = new List<ItemModelDTO>();
-            var rnd = new Random();
 
-            //Populates record with ItemModelDTOs that vary on id, name, and organization.
-            for (int i = 0; i < recordCount / 3; ++i)
+            if (recordCount > 0)
             {
-                recordList.Add(CreateSingleRecord(3*i, "This Description", "Sales", rnd));
-                recordList.Add(CreateSingleRecord(3*i + 1, "That Description", "Accounting", rnd));
-                recordList.Add(CreateSingleRecord(3*i + 2, "Other Description", "Marketing", rnd));
-            }
+                var rnd = new Random();
 
-            //The following blocks resolve cases where recordCount is not divisible by three, meaning
-            //the block above has not finished creating the last one or two records.
-            if (recordCount % recordList.Count() != 0)
-            {
-                recordList.Add(CreateSingleRecord(recordCount - (recordCount % recordList.Count()), "ThisDescription", "Sales", rnd));
-            }
-            if (recordCount % recordList.Count() == 1)
-            {
-                recordList.Add(CreateSingleRecord(recordCount - 1, "ThatDescription", "Accounting", rnd));
-            }
+                //Populates record with ItemModelDTOs that vary on id, name, and organization.
+                for (int i = 0; i < recordCount / 3; ++i)
+                {
+                    recordList.Add(CreateSingleRecord(3 * i, "This Description", "Sales", rnd));
+                    recordList.Add(CreateSingleRecord(3 * i + 1, "That Description", "Accounting", rnd));
+                    recordList.Add(CreateSingleRecord(3 * i + 2, "Other Description", "Marketing", rnd));
+                }
 
+                //The following blocks resolve cases where recordCount is not divisible by three, meaning
+                //the block above has not finished creating the last one or two records.
+                if (recordCount % recordList.Count() != 0)
+                {
+                    recordList.Add(CreateSingleRecord(recordCount - (recordCount % recordList.Count()), "ThisDescription", "Sales", rnd));
+                }
+                if (recordCount % recordList.Count() == 1)
+                {
+                    recordList.Add(CreateSingleRecord(recordCount - 1, "ThatDescription", "Accounting", rnd));
+                }
+            }
+            else
+            {
+                throw new Exception("recordCount must be a positive integer.");
+            }
+            
             return recordList;
         }
 
@@ -94,18 +113,25 @@ namespace Demo.DAL
         /// <returns></returns>
         private ItemModelDTO CreateSingleRecord(int counter, string description, string org, Random rnd)
         {
-            var record = new ItemModelDTO
+            if (counter > -1 && !string.IsNullOrWhiteSpace(description) && !string.IsNullOrWhiteSpace(org) && rnd != null)
             {
-                ItemId = counter + 1,
-                ItemName = description + " " + (counter + 1).ToString(),
-                Price = 1000.00M * rnd.Next(5, 21),
-                Organization = org,
-                POCName = PickANameForSingleRecord(rnd),
-                DateEstablished = DateTime.Now.AddMonths(-rnd.Next(6, 25)),
-                DateBegin = DateTime.Now.AddMonths(rnd.Next(-6, 13))
-            };
+                var record = new ItemModelDTO
+                {
+                    ItemId = counter + 1,
+                    ItemName = description + " " + (counter + 1).ToString(),
+                    Price = 1000.00M * rnd.Next(5, 21),
+                    Organization = org,
+                    POCName = PickANameForSingleRecord(rnd),
+                    DateEstablished = DateTime.Now.AddMonths(-rnd.Next(6, 25)),
+                    DateBegin = DateTime.Now.AddMonths(rnd.Next(-6, 13))
+                };
 
-            return record;
+                return record;
+            }
+            else
+            {
+                throw new Exception("Invalid input");
+            }
         }
 
         #endregion
@@ -123,9 +149,9 @@ namespace Demo.DAL
 
             if (!string.IsNullOrWhiteSpace(organization))
             {
-                filteredItems = FakeContext.Where(x => x.Organization == organization)
-                                           .OrderBy(x => x.ItemId)
-                                           .ToList();
+                filteredItems = FakeContext.FakeEntity.Where(x => x.Organization == organization)
+                                                      .OrderBy(x => x.ItemId)
+                                                      .ToList();
             }
 
             return filteredItems;
@@ -136,9 +162,9 @@ namespace Demo.DAL
         /// </summary>
         public List<ItemModelDTO> GetItems()
         {
-            //TODO this method doesn't do anything other than return FakeContext. A parameter for a filter model
+            //TODO this method doesn't do anything other than return FakeEntity. A parameter for a filter model
             //can be added if needed in the future.
-            return FakeContext.OrderBy(x => x.ItemId).ToList();
+            return FakeContext.FakeEntity.OrderBy(x => x.ItemId).ToList();
         }
 
         /// <summary>
@@ -147,7 +173,7 @@ namespace Demo.DAL
         /// <returns></returns>
         public List<string> GetOrganizations()
         {
-            var organizations = FakeContext.Select(x => x.Organization).Distinct().ToList();
+            var organizations = FakeContext.FakeEntity.Select(x => x.Organization).Distinct().ToList();
             return organizations;
         }
 

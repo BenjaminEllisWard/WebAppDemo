@@ -38,6 +38,7 @@ namespace Demo.BLL
         /// <returns>filter model for page model</returns>
         private FilterModelDTO GetFilterOptionsForPageModel(List<ItemModelDTO> items)
         {
+            //TODO get these options from the DAL instead of hacking them from the model.
             var filterModel = new FilterModelDTO()
             {
                 OrganizationOptions = items.Select(x => x.Organization).Distinct().ToList(),
