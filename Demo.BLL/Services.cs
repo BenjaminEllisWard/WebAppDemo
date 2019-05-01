@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Demo.DAL;
 using Demo.DTOs;
+using static Demo.GeneralFunctions.ValidationHelper;
 
 namespace Demo.BLL
 {
@@ -75,9 +76,12 @@ namespace Demo.BLL
         {
             var items = new List<ItemModelDTO>();
 
-            using (var repo = new FakeRepository())
+            if (ValidateOrganization(organization))
             {
-                items = repo.GetFilteredItems(organization);
+                using (var repo = new FakeRepository())
+                {
+                    items = repo.GetFilteredItems(organization);
+                }
             }
 
             return items;

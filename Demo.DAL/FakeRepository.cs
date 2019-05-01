@@ -23,7 +23,14 @@ namespace Demo.DAL
         /// to test performance by varying page size.</param>
         public FakeRepository(int recordCount = 100)
         {
-            FakeContext = CreateRecordsForContextList(recordCount);
+            if (recordCount > 0)
+            {
+                FakeContext = CreateRecordsForContextList(recordCount);
+            }
+            else
+            {
+                throw new Exception("recordCount must be a positive, non-zero integer.");
+            }
         }
 
         /// <summary>
@@ -66,11 +73,11 @@ namespace Demo.DAL
             //the block above has not finished creating the last one or two records.
             if (recordCount % recordList.Count() != 0)
             {
-                recordList.Add(CreateSingleRecord(recordCount - (recordCount % recordList.Count()),"ThisDescription", "Sales", rnd));
+                recordList.Add(CreateSingleRecord(recordCount - (recordCount % recordList.Count()), "ThisDescription", "Sales", rnd));
             }
             if (recordCount % recordList.Count() == 1)
             {
-                recordList.Add(CreateSingleRecord(recordCount - 1, "ThatDescription", "Sales", rnd));
+                recordList.Add(CreateSingleRecord(recordCount - 1, "ThatDescription", "Accounting", rnd));
             }
 
             return recordList;
