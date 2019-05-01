@@ -201,7 +201,7 @@ namespace Demo.DAL
 
             var records = new List<ItemModelDTO>();
 
-            if (minDate >= maxDate)
+            if (minDate <= maxDate)
             {
                 if (!string.IsNullOrWhiteSpace(dateCategory))
                 {
@@ -246,7 +246,7 @@ namespace Demo.DAL
         {
             var records = new List<ItemModelDTO>();
 
-            if (minPrice >= maxPrice)
+            if (minPrice <= maxPrice)
             {
                 records = FakeContext.FakeEntity.Where(x => x.Price >= minPrice
                                                             && x.Price <= maxPrice)
