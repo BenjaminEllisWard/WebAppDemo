@@ -149,7 +149,7 @@ namespace Demo.DAL
 
             if (!string.IsNullOrWhiteSpace(organization))
             {
-                filteredItems = FakeContext.FakeEntity.Where(x => x.Organization == organization)
+                filteredItems = FakeContext.FakeEntity.Where(x => x.Organization.ToLower() == organization.ToLower())
                                                       .OrderBy(x => x.ItemId)
                                                       .ToList();
             }
@@ -168,13 +168,96 @@ namespace Demo.DAL
         }
 
         /// <summary>
-        /// Gets a list of all organizations
+        /// Gets a list of all organizations.
         /// </summary>
         /// <returns></returns>
         public List<string> GetOrganizations()
         {
             var organizations = FakeContext.FakeEntity.Select(x => x.Organization).Distinct().ToList();
             return organizations;
+        }
+
+        /// <summary>
+        /// Gets a list of all product representatives.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetRepresentatives()
+        {
+            var representatives = FakeContext.FakeEntity.Select(x => x.POCName).Distinct().ToList();
+            return representatives;
+        }
+
+        /// <summary>
+        /// Gets a list of records filtered by date.
+        /// </summary>
+        /// <param name="minDate"></param>
+        /// <param name="maxDate"></param>
+        /// <param name="dateCategory">Determines whether records are sorted by DateEstablished or DateBegin</param>
+        /// <returns>List of records sorted by date</returns>
+        public List<ItemModelDTO> GetRecordsByDate(DateTime minDate, DateTime maxDate, string dateCategory)
+        {
+            minDate = minDate == null ? DateTime.MinValue : minDate;
+            maxDate = maxDate == null ? DateTime.MaxValue : maxDate;
+
+            var records = new List<ItemModelDTO>();
+
+            if (minDate >= maxDate)
+            {
+                if (!string.IsNullOrWhiteSpace(dateCategory))
+                {
+                    switch (dateCategory.ToLower())
+                    {
+                        case "dateestablished":
+                            records = FakeContext.FakeEntity.Where(x => x.DateEstablished >= minDate
+                                                                        && x.DateEstablished <= maxDate)
+                                                                    .ToList();
+                            break;
+
+                        case "datebegin":
+                            records = FakeContext.FakeEntity.Where(x => x.DateBegin >= minDate
+                                                                        && x.DateBegin <= maxDate)
+                                                                    .ToList();
+                            break;
+
+                        default:
+                            throw new Exception("Invalid input");
+                    }
+                }
+                else
+                {
+                    throw new Exception("dateCategory cannot be null");
+                }
+            }
+            else
+            {
+                throw new Exception("minDate cannot be greater than maxDate.");
+            }
+
+            return records;
+        }
+
+        /// <summary>
+        /// Gets a list of records filtered by price.
+        /// </summary>
+        /// <param name="minPrice"></param>
+        /// <param name="maxPrice"></param>
+        /// <returns></returns>
+        public List<ItemModelDTO> GetRecordsByPrice(decimal minPrice, decimal maxPrice)
+        {
+            var records = new List<ItemModelDTO>();
+
+            if (minPrice >= maxPrice)
+            {
+                records = FakeContext.FakeEntity.Where(x => x.Price >= minPrice
+                                                            && x.Price <= maxPrice)
+                                                .ToList();
+            }
+            else
+            {
+                throw new Exception("minPrice cannot be greater than maxPrice");
+            }
+
+            return records;
         }
 
         /// <summary>
